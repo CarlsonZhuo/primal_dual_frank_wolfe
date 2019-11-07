@@ -1,0 +1,29 @@
+% main file
+n = 1000;
+d = 800;
+c = 600;
+k=5;
+A = rand(n,d-1);
+A=[A,ones(n,1)];
+X0 = (rand(d,k)-0.5)*(rand(k,c)-0.5);
+y = A*X0;
+X0=X0/max(max(y));
+y = A*X0;
+budget = 3000;
+%b = -ones(n,c);
+%b(y>0)=1;
+nucnorm = norm(svd(X0),1);
+%[tmp,b] = max(y,[],2);
+%c=max(b);
+%X0 = X0(:,1:c);
+%y = A*X0;
+%[tmp, b] =max(y,[],2);
+[time1, perf1]   =   SVR_FW(A, y, nucnorm, budget, 0.01);
+[time2, perf2]      =   SGD(A, y, nucnorm, budget, 0.01);
+[time3, perf3]     =   SVRG(A, y, nucnorm, budget, 0.01);
+[time4, perf4]    = SVR_CGS(A, y, nucnorm, budget, 0.01);
+[time5, perf5]     =    SFW(A, y, nucnorm, budget, 0.01);
+[time6, perf6]     =   SCGS(A, y, nucnorm, budget, 0.01);
+[time7, perf7]  = PDFW(A, y, k, nucnorm, budget, 0.01);
+[time8, perf8]=blockFW(A, y, k, nucnorm, budget, 0.01);
+loss(X0, A, y, 10.0/n)

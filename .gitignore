@@ -1,0 +1,9 @@
+*.pyc
+data/news20.binary
+data/ijcnn.bin
+data/gisette_scale
+data/cod_rna.bin
+source/test_news
+source/test
+source/test_eigen
+source/test_baseline
